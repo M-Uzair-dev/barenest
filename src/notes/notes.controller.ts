@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateNoteDto } from './create-note.dto';
 
 @Controller('notes')
 export class NotesController {
@@ -11,7 +12,7 @@ export class NotesController {
   }
 
   @Post()
-  create(@Body() body: { title: string; content?: string }) {
+  create(@Body() body: CreateNoteDto) {
     return this.prisma.note.create({
       data: { title: body.title, content: body.content },
     });
