@@ -25,7 +25,7 @@ export class UploadsController {
         Key: key,
         ContentType: dto.contentType,
       }),
-      { expiresIn: EXPIRES_IN },
+      { expiresIn: EXPIRES_IN, signableHeaders: new Set(['content-type']) },
     );
 
     return { key, url, expiresIn: EXPIRES_IN };
