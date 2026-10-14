@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
+import type { Request } from 'express';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
 
@@ -25,6 +26,16 @@ export class AppController {
     return {
       status: 'ok',
       db,
+    };
+  }
+
+  @Get('whoami')
+  whoami(@Req() req: Request) {
+    return {
+      ip: req.ip, // honours trust proxy
+      socketIp: req.socket.remoteAddress, // always the direct peer (the ALB)
+      protocol: req.protocol,
+      xff: req.headers['x-forwarded-for'] ?? null,
     };
   }
 }
